@@ -1,5 +1,5 @@
-export function analyzePerformance(answers: any[], questions: any[]) {
-    const sections = {};
+export function analyzePerformance(answers: any, questions: any[]) {
+    const sections: any = {};
 
     for (let i = 0; i < questions.length; i++) {
         const q = questions[i];

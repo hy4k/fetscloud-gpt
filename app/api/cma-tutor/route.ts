@@ -1,18 +1,3 @@
-[
-    {
-        role: "user",
-        content: `You are FETS CMA Tutor. Provide structured explanation:
-
-Final Answer:
-Steps:
-Formula:
-Example:
-Exam Tip:
-
-${prompt}`
-    }
-]
-
 import { NextResponse } from "next/server";
 import { runCmaTutor } from "@/app/lib/tutor";
 

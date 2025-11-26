@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { analyzePerformance } from "@/lib/adaptive-engine";
-import { generateStudyPlan } from "@/lib/study-plan";
+import { analyzePerformance } from "@/app/lib/adaptive-engine";
+import { generateStudyPlan } from "@/app/lib/study-plan";
 
 export async function GET() {
     // Example mock data — replace with actual saved results

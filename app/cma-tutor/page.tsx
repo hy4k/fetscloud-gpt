@@ -1,11 +1,4 @@
 "use client";
-<button
-    onClick={() => window.location.href = "/exam/test"}
-    className="absolute top-6 right-6 px-4 py-2 rounded-lg bg-gray-800 text-white shadow"
->
-    ← Return to Exam
-</button>
-
 import { useEffect, useRef, useState } from "react";
 
 export default function CMATutor() {
@@ -71,6 +64,12 @@ export default function CMATutor() {
 
     return (
         <div className="min-h-screen p-6 flex flex-col items-center bg-gradient-to-br from-gray-200 to-gray-300">
+            <button
+                onClick={() => window.location.href = "/exam/test"}
+                className="absolute top-6 right-6 px-4 py-2 rounded-lg bg-gray-800 text-white shadow"
+            >
+                ← Return to Exam
+            </button>
 
             {/* Glass Card */}
             <div className="backdrop-blur-xl bg-white/30 shadow-2xl rounded-3xl border border-white/40 w-full max-w-3xl p-6">
