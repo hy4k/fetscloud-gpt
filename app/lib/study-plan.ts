@@ -1,6 +1,7 @@
 import OpenAI from "openai";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const apiKey = process.env.OPENAI_API_KEY || "dummy-key";
+const client = new OpenAI({ apiKey });
 
 export async function generateStudyPlan(performance: any) {
     const prompt = `
