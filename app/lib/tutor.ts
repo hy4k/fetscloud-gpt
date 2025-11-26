@@ -1,7 +1,8 @@
 import OpenAI from "openai";
 import { getContextFromRAG } from "./rag";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const apiKey = process.env.OPENAI_API_KEY || "dummy-key";
+const client = new OpenAI({ apiKey });
 
 export async function runCmaTutor(question: string) {
     const context = await getContextFromRAG(question);
