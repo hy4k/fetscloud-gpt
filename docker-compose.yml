@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik:v2.11
+    container_name: traefik
+    command:
+      - "--api.dashboard=true"
+      - "--providers.file.directory=/etc/traefik/dynamic"
+      - "--providers.file.watch=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=${LETSENCRYPT_EMAIL}"
+      - "--certificatesresolvers.myresolver.acme.storage=/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./traefik/traefik.yml:/etc/traefik/traefik.yml"
+      - "./traefik/dynamic:/etc/traefik/dynamic"
+      - "./traefik/acme.json:/acme.json"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  cma-app:
+    container_name: fets-cloud-cma
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY}
+      NEXT_PUBLIC_SUPABASE_URL: ${SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.cma-app.rule=Host(`fets.cloud`)"
+      - "traefik.http.routers.cma-app.entrypoints=websecure"
+      - "traefik.http.routers.cma-app.tls.certresolver=myresolver"
+      - "traefik.http.services.cma-app.loadbalancer.server.port=3000"
+    depends_on:
+      - traefik
