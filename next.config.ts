@@ -1,16 +1,8 @@
-server {
-    listen 80;
-    server_name localhost;
+import type { NextConfig } from "next";
 
-  root / usr / share / nginx / html;
-    index index.html;
+const nextConfig: NextConfig = {
+  output: "standalone",
+  /* config options here */
+};
 
-  location / {
-    try_files $uri $uri/ /index.html;
-}
-
-    error_page 500 502 503 504 / 50x.html;
-location = /50x.html {
-root / usr / share / nginx / html;
-    }
-}
+export default nextConfig;
